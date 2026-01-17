@@ -2,6 +2,7 @@ from flask import Flask
 from routes import register_routes
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'twoj-sekretny-klucz-123456'
 
 
 register_routes(app)
