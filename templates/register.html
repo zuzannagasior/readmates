@@ -1,9 +1,10 @@
-{% extends "base.html" %}
+{% extends "base_auth.html" %}
+
+{% block title %}Rejestracja{% endblock %}
+{% block auth_title %}Rejestracja{% endblock %}
 
 {% block content %}
-<h1>Rejestracja</h1>
-
-<form method="POST" action="{{ url_for('register') }}">
+<form method="POST" action="{{ url_for('register') }}" class="d-flex flex-column gap-3">
     {{ form.hidden_tag() }}  
 
     <div>
@@ -39,6 +40,10 @@
     </div>
 
     {{ form.submit(class="btn btn-primary") }}
+
+    <p class="text-center small text-muted">Masz już konto? <a href="{{ url_for('login') }}">Zaloguj się</a></p>
+
 </form>
+
 
 {% endblock %}

@@ -1,0 +1,40 @@
+@import "theme.css";
+
+/* logo */
+.logo-small {
+    width: 32px;
+    height: 32px;
+}
+
+.logo-medium {
+    width: auto;
+    height: 100px;
+}
+
+.logo-large {
+    width: 300px;
+    height: 300px;
+}
+
+.logo-text-small {
+    font-family: "Meow Script", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 32px;
+    line-height: 100%;
+}
+
+.logo-text-large {
+    font-family: "Meow Script", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 100px;
+    line-height: 100%;
+}
+
+
+/* utils */
+
+.mb-2px {
+    margin-bottom: 2px;
+}

@@ -1,0 +1,409 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Meow+Script&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Meow+Script&family=Nokora:wght@100..900&display=swap');
+
+:root {
+   /* ============================================
+      KOLORY PODSTAWOWE
+      ============================================ */
+   --bs-blue: #5c7a99;
+   --bs-indigo: #5a5a8a;
+   --bs-purple: #7a6b8a;
+   --bs-pink: #b58b8b;
+   --bs-red: #c45c5c;
+   --bs-orange: #c98a5a;
+   --bs-yellow: #d4a84b;
+   --bs-green: #6b8a6b;
+   --bs-teal: #5a8a8a;
+   --bs-cyan: #6a9ab5;
+   --bs-white: #faf8f5;
+   --bs-black: #2d2a26;
+ 
+   /* ============================================
+      ODCIENIE BEŻOWE / CIEPŁE SZAROŚCI
+      ============================================ */
+   --bs-gray: #8a847a;
+   --bs-gray-dark: #4a453d;
+   --bs-gray-100: #fdfcfa;
+   --bs-gray-200: #f5f3ef;
+   --bs-gray-300: #e8e4dd;
+   --bs-gray-400: #d4cfc5;
+   --bs-gray-500: #b5ae9f;
+   --bs-gray-600: #8a847a;
+   --bs-gray-700: #5c574e;
+   --bs-gray-800: #4a453d;
+   --bs-gray-900: #3a3630;
+ 
+   /* ============================================
+      KOLORY SEMANTYCZNE (primary, secondary, etc.)
+      ============================================ */
+   --bs-primary: #3d4f5f;
+   --bs-secondary: #8a847a;
+   --bs-success: #5a7a5a;
+   --bs-info: #5a7a8a;
+   --bs-warning: #c9a03d;
+   --bs-danger: #a85a5a;
+   --bs-light: #faf8f5;
+   --bs-dark: #3a3630;
+ 
+   /* ============================================
+      KOLORY RGB (dla opacity)
+      ============================================ */
+   --bs-primary-rgb: 61, 79, 95;
+   --bs-secondary-rgb: 138, 132, 122;
+   --bs-success-rgb: 90, 122, 90;
+   --bs-info-rgb: 90, 122, 138;
+   --bs-warning-rgb: 201, 160, 61;
+   --bs-danger-rgb: 168, 90, 90;
+   --bs-light-rgb: 250, 248, 245;
+   --bs-dark-rgb: 58, 54, 48;
+   --bs-white-rgb: 250, 248, 245;
+   --bs-black-rgb: 45, 42, 38;
+ 
+   /* ============================================
+      TYPOGRAFIA - CZCIONKI
+      ============================================ */
+   --bs-font-sans-serif: "Nokora", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+   
+   /* Główna czcionka strony */
+   --bs-body-font-family: var(--bs-font-sans-serif);
+   --bs-body-font-size: 1rem;
+   --bs-body-font-weight: 400;
+   --bs-body-line-height: 1.5;
+ 
+   /* ============================================
+      KOLORY BODY (tło i tekst)
+      ============================================ */
+   --bs-body-color: #3a3630;
+   --bs-body-color-rgb: 58, 54, 48;
+   --bs-body-bg: #faf8f5;
+   --bs-body-bg-rgb: 250, 248, 245;
+ 
+   /* ============================================
+      NAGŁÓWKI
+      ============================================ */
+   --bs-heading-color: #2d2a26;
+ 
+   /* ============================================
+      LINKI
+      ============================================ */
+   --bs-link-color: #3d4f5f;
+   --bs-link-color-rgb: 61, 79, 95;
+   --bs-link-decoration: underline;
+   --bs-link-hover-color: #2d3d4a;
+   --bs-link-hover-color-rgb: 45, 61, 74;
+ 
+   /* ============================================
+      OBRAMOWANIA
+      ============================================ */
+   --bs-border-width: 1px;
+   --bs-border-style: solid;
+   --bs-border-color: #e8e4dd;
+   --bs-border-color-translucent: rgba(58, 54, 48, 0.15);
+   --bs-border-radius: 0.375rem;
+   --bs-border-radius-sm: 0.25rem;
+   --bs-border-radius-lg: 0.5rem;
+   --bs-border-radius-xl: 1rem;
+   --bs-border-radius-xxl: 2rem;
+   --bs-border-radius-pill: 50rem;
+ 
+   /* ============================================
+      CIENIE
+      ============================================ */
+   --bs-box-shadow: 0 0.5rem 1rem rgba(58, 54, 48, 0.12);
+   --bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(58, 54, 48, 0.06);
+   --bs-box-shadow-lg: 0 1rem 3rem rgba(58, 54, 48, 0.15);
+   --bs-box-shadow-inset: inset 0 1px 2px rgba(58, 54, 48, 0.06);
+ 
+   /* ============================================
+      FOCUS
+      ============================================ */
+   --bs-focus-ring-width: 0.25rem;
+   --bs-focus-ring-opacity: 0.25;
+   --bs-focus-ring-color: rgba(61, 79, 95, 0.25);
+ 
+   /* ============================================
+      FORMULARZE
+      ============================================ */
+   --bs-form-valid-color: #5a7a5a;
+   --bs-form-valid-border-color: #5a7a5a;
+   --bs-form-invalid-color: #a85a5a;
+   --bs-form-invalid-border-color: #a85a5a;
+ 
+   /* ============================================
+      TEKST POMOCNICZY
+      ============================================ */
+   --bs-secondary-color: rgba(58, 54, 48, 0.75);
+   --bs-secondary-color-rgb: 58, 54, 48;
+   --bs-secondary-bg: #f5f3ef;
+   --bs-secondary-bg-rgb: 245, 243, 239;
+   
+   --bs-tertiary-color: rgba(58, 54, 48, 0.5);
+   --bs-tertiary-color-rgb: 58, 54, 48;
+   --bs-tertiary-bg: #fdfcfa;
+   --bs-tertiary-bg-rgb: 253, 252, 250;
+   
+   --bs-emphasis-color: #2d2a26;
+   --bs-emphasis-color-rgb: 45, 42, 38;
+
+
+   /* ============================================
+   NADPISANIA PRZYCISKÓW BOOTSTRAP
+   ============================================ */
+
+/* Primary Button */
+.btn-primary {
+   --bs-btn-color: #fff;
+   --bs-btn-bg: #3d4f5f;
+   --bs-btn-border-color: #3d4f5f;
+   --bs-btn-hover-color: #fff;
+   --bs-btn-hover-bg: #2d3d4a;
+   --bs-btn-hover-border-color: #2d3d4a;
+   --bs-btn-focus-shadow-rgb: 61, 79, 95;
+   --bs-btn-active-color: #fff;
+   --bs-btn-active-bg: #253340;
+   --bs-btn-active-border-color: #253340;
+   --bs-btn-disabled-color: #fff;
+   --bs-btn-disabled-bg: #3d4f5f;
+   --bs-btn-disabled-border-color: #3d4f5f;
+ }
+ 
+ .btn-outline-primary {
+   --bs-btn-color: #3d4f5f;
+   --bs-btn-border-color: #3d4f5f;
+   --bs-btn-hover-color: #fff;
+   --bs-btn-hover-bg: #3d4f5f;
+   --bs-btn-hover-border-color: #3d4f5f;
+   --bs-btn-focus-shadow-rgb: 61, 79, 95;
+   --bs-btn-active-color: #fff;
+   --bs-btn-active-bg: #2d3d4a;
+   --bs-btn-active-border-color: #2d3d4a;
+   --bs-btn-disabled-color: #3d4f5f;
+   --bs-btn-disabled-border-color: #3d4f5f;
+ }
+ 
+ /* Secondary Button */
+ .btn-secondary {
+   --bs-btn-color: #fff;
+   --bs-btn-bg: #8a847a;
+   --bs-btn-border-color: #8a847a;
+   --bs-btn-hover-color: #fff;
+   --bs-btn-hover-bg: #6e6962;
+   --bs-btn-hover-border-color: #6e6962;
+   --bs-btn-focus-shadow-rgb: 138, 132, 122;
+   --bs-btn-active-color: #fff;
+   --bs-btn-active-bg: #5c574e;
+   --bs-btn-active-border-color: #5c574e;
+   --bs-btn-disabled-color: #fff;
+   --bs-btn-disabled-bg: #8a847a;
+   --bs-btn-disabled-border-color: #8a847a;
+ }
+ 
+ .btn-outline-secondary {
+   --bs-btn-color: #8a847a;
+   --bs-btn-border-color: #8a847a;
+   --bs-btn-hover-color: #fff;
+   --bs-btn-hover-bg: #8a847a;
+   --bs-btn-hover-border-color: #8a847a;
+   --bs-btn-focus-shadow-rgb: 138, 132, 122;
+   --bs-btn-active-color: #fff;
+   --bs-btn-active-bg: #6e6962;
+   --bs-btn-active-border-color: #6e6962;
+   --bs-btn-disabled-color: #8a847a;
+   --bs-btn-disabled-border-color: #8a847a;
+ }
+ 
+ /* Success Button */
+ .btn-success {
+   --bs-btn-color: #fff;
+   --bs-btn-bg: #5a7a5a;
+   --bs-btn-border-color: #5a7a5a;
+   --bs-btn-hover-color: #fff;
+   --bs-btn-hover-bg: #4a6a4a;
+   --bs-btn-hover-border-color: #4a6a4a;
+   --bs-btn-focus-shadow-rgb: 90, 122, 90;
+   --bs-btn-active-color: #fff;
+   --bs-btn-active-bg: #3d5a3d;
+   --bs-btn-active-border-color: #3d5a3d;
+   --bs-btn-disabled-color: #fff;
+   --bs-btn-disabled-bg: #5a7a5a;
+   --bs-btn-disabled-border-color: #5a7a5a;
+ }
+ 
+ .btn-outline-success {
+   --bs-btn-color: #5a7a5a;
+   --bs-btn-border-color: #5a7a5a;
+   --bs-btn-hover-color: #fff;
+   --bs-btn-hover-bg: #5a7a5a;
+   --bs-btn-hover-border-color: #5a7a5a;
+   --bs-btn-focus-shadow-rgb: 90, 122, 90;
+   --bs-btn-active-color: #fff;
+   --bs-btn-active-bg: #4a6a4a;
+   --bs-btn-active-border-color: #4a6a4a;
+   --bs-btn-disabled-color: #5a7a5a;
+   --bs-btn-disabled-border-color: #5a7a5a;
+ }
+ 
+ /* Danger Button */
+ .btn-danger {
+   --bs-btn-color: #fff;
+   --bs-btn-bg: #a85a5a;
+   --bs-btn-border-color: #a85a5a;
+   --bs-btn-hover-color: #fff;
+   --bs-btn-hover-bg: #8a4a4a;
+   --bs-btn-hover-border-color: #8a4a4a;
+   --bs-btn-focus-shadow-rgb: 168, 90, 90;
+   --bs-btn-active-color: #fff;
+   --bs-btn-active-bg: #7a3d3d;
+   --bs-btn-active-border-color: #7a3d3d;
+   --bs-btn-disabled-color: #fff;
+   --bs-btn-disabled-bg: #a85a5a;
+   --bs-btn-disabled-border-color: #a85a5a;
+ }
+ 
+ .btn-outline-danger {
+   --bs-btn-color: #a85a5a;
+   --bs-btn-border-color: #a85a5a;
+   --bs-btn-hover-color: #fff;
+   --bs-btn-hover-bg: #a85a5a;
+   --bs-btn-hover-border-color: #a85a5a;
+   --bs-btn-focus-shadow-rgb: 168, 90, 90;
+   --bs-btn-active-color: #fff;
+   --bs-btn-active-bg: #8a4a4a;
+   --bs-btn-active-border-color: #8a4a4a;
+   --bs-btn-disabled-color: #a85a5a;
+   --bs-btn-disabled-border-color: #a85a5a;
+ }
+ 
+ /* Warning Button */
+ .btn-warning {
+   --bs-btn-color: #2d2a26;
+   --bs-btn-bg: #c9a03d;
+   --bs-btn-border-color: #c9a03d;
+   --bs-btn-hover-color: #2d2a26;
+   --bs-btn-hover-bg: #b08a30;
+   --bs-btn-hover-border-color: #b08a30;
+   --bs-btn-focus-shadow-rgb: 201, 160, 61;
+   --bs-btn-active-color: #2d2a26;
+   --bs-btn-active-bg: #9a7a2a;
+   --bs-btn-active-border-color: #9a7a2a;
+   --bs-btn-disabled-color: #2d2a26;
+   --bs-btn-disabled-bg: #c9a03d;
+   --bs-btn-disabled-border-color: #c9a03d;
+ }
+ 
+ .btn-outline-warning {
+   --bs-btn-color: #c9a03d;
+   --bs-btn-border-color: #c9a03d;
+   --bs-btn-hover-color: #2d2a26;
+   --bs-btn-hover-bg: #c9a03d;
+   --bs-btn-hover-border-color: #c9a03d;
+   --bs-btn-focus-shadow-rgb: 201, 160, 61;
+   --bs-btn-active-color: #2d2a26;
+   --bs-btn-active-bg: #b08a30;
+   --bs-btn-active-border-color: #b08a30;
+   --bs-btn-disabled-color: #c9a03d;
+   --bs-btn-disabled-border-color: #c9a03d;
+ }
+ 
+ /* Info Button */
+ .btn-info {
+   --bs-btn-color: #fff;
+   --bs-btn-bg: #5a7a8a;
+   --bs-btn-border-color: #5a7a8a;
+   --bs-btn-hover-color: #fff;
+   --bs-btn-hover-bg: #4a6a7a;
+   --bs-btn-hover-border-color: #4a6a7a;
+   --bs-btn-focus-shadow-rgb: 90, 122, 138;
+   --bs-btn-active-color: #fff;
+   --bs-btn-active-bg: #3d5a6a;
+   --bs-btn-active-border-color: #3d5a6a;
+   --bs-btn-disabled-color: #fff;
+   --bs-btn-disabled-bg: #5a7a8a;
+   --bs-btn-disabled-border-color: #5a7a8a;
+ }
+ 
+ .btn-outline-info {
+   --bs-btn-color: #5a7a8a;
+   --bs-btn-border-color: #5a7a8a;
+   --bs-btn-hover-color: #fff;
+   --bs-btn-hover-bg: #5a7a8a;
+   --bs-btn-hover-border-color: #5a7a8a;
+   --bs-btn-focus-shadow-rgb: 90, 122, 138;
+   --bs-btn-active-color: #fff;
+   --bs-btn-active-bg: #4a6a7a;
+   --bs-btn-active-border-color: #4a6a7a;
+   --bs-btn-disabled-color: #5a7a8a;
+   --bs-btn-disabled-border-color: #5a7a8a;
+ }
+ 
+ /* Light Button */
+ .btn-light {
+   --bs-btn-color: #3a3630;
+   --bs-btn-bg: #faf8f5;
+   --bs-btn-border-color: #e8e4dd;
+   --bs-btn-hover-color: #3a3630;
+   --bs-btn-hover-bg: #f5f3ef;
+   --bs-btn-hover-border-color: #d4cfc5;
+   --bs-btn-focus-shadow-rgb: 250, 248, 245;
+   --bs-btn-active-color: #3a3630;
+   --bs-btn-active-bg: #e8e4dd;
+   --bs-btn-active-border-color: #d4cfc5;
+   --bs-btn-disabled-color: #3a3630;
+   --bs-btn-disabled-bg: #faf8f5;
+   --bs-btn-disabled-border-color: #e8e4dd;
+ }
+ 
+ .btn-outline-light {
+   --bs-btn-color: #8a847a;
+   --bs-btn-border-color: #e8e4dd;
+   --bs-btn-hover-color: #3a3630;
+   --bs-btn-hover-bg: #faf8f5;
+   --bs-btn-hover-border-color: #e8e4dd;
+   --bs-btn-focus-shadow-rgb: 250, 248, 245;
+   --bs-btn-active-color: #3a3630;
+   --bs-btn-active-bg: #f5f3ef;
+   --bs-btn-active-border-color: #d4cfc5;
+   --bs-btn-disabled-color: #8a847a;
+   --bs-btn-disabled-border-color: #e8e4dd;
+ }
+ 
+ /* Dark Button */
+ .btn-dark {
+   --bs-btn-color: #faf8f5;
+   --bs-btn-bg: #3a3630;
+   --bs-btn-border-color: #3a3630;
+   --bs-btn-hover-color: #faf8f5;
+   --bs-btn-hover-bg: #4a453d;
+   --bs-btn-hover-border-color: #4a453d;
+   --bs-btn-focus-shadow-rgb: 58, 54, 48;
+   --bs-btn-active-color: #faf8f5;
+   --bs-btn-active-bg: #5c574e;
+   --bs-btn-active-border-color: #5c574e;
+   --bs-btn-disabled-color: #faf8f5;
+   --bs-btn-disabled-bg: #3a3630;
+   --bs-btn-disabled-border-color: #3a3630;
+ }
+ 
+ .btn-outline-dark {
+   --bs-btn-color: #3a3630;
+   --bs-btn-border-color: #3a3630;
+   --bs-btn-hover-color: #faf8f5;
+   --bs-btn-hover-bg: #3a3630;
+   --bs-btn-hover-border-color: #3a3630;
+   --bs-btn-focus-shadow-rgb: 58, 54, 48;
+   --bs-btn-active-color: #faf8f5;
+   --bs-btn-active-bg: #4a453d;
+   --bs-btn-active-border-color: #4a453d;
+   --bs-btn-disabled-color: #3a3630;
+   --bs-btn-disabled-border-color: #3a3630;
+ }
+ 
+ /* Link Button */
+ .btn-link {
+   --bs-btn-color: #3d4f5f;
+   --bs-btn-hover-color: #2d3d4a;
+   --bs-btn-active-color: #253340;
+   --bs-btn-disabled-color: #8a847a;
+ }
+ }

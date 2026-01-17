@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block body_class %}app-page{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-lg">
+    <div class="container position-relative">
+      <!-- Navbar brand wycentrowany absolutnie -->
+      <a class="navbar-brand d-flex align-items-center gap-1 position-absolute start-50 translate-middle-x" href="{{ url_for('home') }}">
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo" class="logo-small mb-2px">
+        <span class="logo-text-small">Readmates</span>
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('create') }}">Nowy post</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('user', username='admin') }}">Profil</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<main class="container py-4">
+    {% block content %}{% endblock %}
+ </main>
+{% endblock %}
