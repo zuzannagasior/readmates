@@ -1,0 +1,105 @@
+{
+  "1": [
+    {
+      "id": 1,
+      "author_username": "czytam_wiec_jestem",
+      "content": "Tez uwielbiam te ksiazke! Behemot jest genialny.",
+      "created_at": "2026-01-15T15:00:00"
+    },
+    {
+      "id": 2,
+      "author_username": "nocny_czytelnik",
+      "content": "Mialem ja na liscie od dawna, chyba czas w koncu przeczytac!",
+      "created_at": "2026-01-15T16:30:00"
+    },
+    {
+      "id": 3,
+      "author_username": "fantasy_fan_pl",
+      "content": "Klasyka absolutna. Kazdy powinien przeczytac.",
+      "created_at": "2026-01-15T18:00:00"
+    }
+  ],
+  "2": [
+    {
+      "id": 4,
+      "author_username": "bookworm_anna",
+      "content": "Marsjanin mi sie bardzo podobal, wiec musze to sprawdzic!",
+      "created_at": "2026-01-14T10:00:00"
+    },
+    {
+      "id": 5,
+      "author_username": "literatura_i_kawa",
+      "content": "Swietna recenzja, przekonales mnie do lektury.",
+      "created_at": "2026-01-14T12:00:00"
+    }
+  ],
+  "3": [
+    {
+      "id": 6,
+      "author_username": "nocny_czytelnik",
+      "content": "Marquez to mistrz. Ta ksiazka zmienila moje spojrzenie na literature.",
+      "created_at": "2026-01-13T20:00:00"
+    },
+    {
+      "id": 7,
+      "author_username": "fantasy_fan_pl",
+      "content": "Mam ja na polce, ale jeszcze nie mialem odwagi zaczac.",
+      "created_at": "2026-01-14T08:00:00"
+    },
+    {
+      "id": 8,
+      "author_username": "bookworm_anna",
+      "content": "Jedna z moich ulubionych! Drzewo genealogiczne Buendiow to cos niesamowitego.",
+      "created_at": "2026-01-14T14:00:00"
+    },
+    {
+      "id": 9,
+      "author_username": "czytam_wiec_jestem",
+      "content": "Realizm magiczny w najczystszej postaci!",
+      "created_at": "2026-01-14T16:00:00"
+    }
+  ],
+  "4": [
+    {
+      "id": 10,
+      "author_username": "literatura_i_kawa",
+      "content": "Atticus Finch to wzor do nasladowania.",
+      "created_at": "2026-01-13T10:00:00"
+    },
+    {
+      "id": 11,
+      "author_username": "bookworm_anna",
+      "content": "Plakalam przy tej ksiazce. Niesamowita historia.",
+      "created_at": "2026-01-13T12:00:00"
+    }
+  ],
+  "5": [
+    {
+      "id": 12,
+      "author_username": "nocny_czytelnik",
+      "content": "Murakami ma cos takiego, ze nie mozna sie oderwac.",
+      "created_at": "2026-01-10T18:00:00"
+    }
+  ],
+  "6": [
+    {
+      "id": 13,
+      "author_username": "czytam_wiec_jestem",
+      "content": "Czekam na trzeci tom od lat... chyba sie nie doczekam.",
+      "created_at": "2026-01-08T14:00:00"
+    },
+    {
+      "id": 14,
+      "author_username": "literatura_i_kawa",
+      "content": "Kvothe to swietny bohater, bardzo wielowymiarowy.",
+      "created_at": "2026-01-08T16:00:00"
+    },
+    {
+      "id": 15,
+      "author_username": "bookworm_anna",
+      "content": "System magii w tej ksiazce jest genialny!",
+      "created_at": "2026-01-09T10:00:00"
+    }
+  ]
+}
+

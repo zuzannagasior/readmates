@@ -1,9 +1,15 @@
 @import "theme.css";
 
+/* reset */
+
+p {
+   margin: 0;
+}
+
 /* logo */
 .logo-small {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
 }
 
 .logo-medium {
@@ -20,7 +26,7 @@
     font-family: "Meow Script", cursive;
     font-weight: 400;
     font-style: normal;
-    font-size: 32px;
+    font-size: 40px;
     line-height: 100%;
 }
 
@@ -32,6 +38,16 @@
     line-height: 100%;
 }
 
+/* article */
+
+.article-date {
+    font-size: 14px;
+    line-height: 18px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(calc(-100% - 1rem))
+}
 
 /* utils */
 

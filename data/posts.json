@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "author_id": 101,
+    "author_username": "bookworm_anna",
+    "created_at": "2026-01-15T14:32:00",
+    "updated_at": "2026-01-15T14:32:00",
+    "image": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=800",
+    "content": "<p>Wlasnie skonczylam <span>Mistrz i Malgorzata</span> Bulhakowa i jestem zachwycona!</p><p>Ta ksiazka to absolutne arcydzielo. Polaczenie satyry na sowiecka rzeczywistosc z watkiem biblijnym i fantastyka jest genialne.</p><br><p>Kot Behemot to moj ulubiony bohater - jego dialogi sa przepelnione ironia i humorem.</p><p><span>Ocena: 5/5</span></p>"
+  },
+  {
+    "id": 2,
+    "author_id": 102,
+    "author_username": "czytam_wiec_jestem",
+    "created_at": "2026-01-14T09:15:00",
+    "updated_at": "2026-01-14T10:20:00",
+    "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=800",
+    "content": "<p>Recenzja <span>Projekt Hail Mary</span> Andyego Weira</p><br><p>Jesli podobal wam sie Marsjanin, to ta ksiazka jest jeszcze lepsza!</p><p>Glowny bohater budzi sie sam na statku kosmicznym, nie pamieta kim jest ani jaka jest jego misja.</p><br><p>Swietna hard sci-fi z humorem i wzruszajaca historia przyjazni.</p><p><span>Polecam kazdemu fanowi science fiction!</span></p>"
+  },
+  {
+    "id": 3,
+    "author_id": 103,
+    "author_username": "literatura_i_kawa",
+    "created_at": "2026-01-13T18:45:00",
+    "updated_at": "2026-01-13T18:45:00",
+    "image": "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=800",
+    "content": "<p><span>Sto lat samotnosci</span> - Gabriel Garcia Marquez</p><br><p>Wracam do tej ksiazki co kilka lat i za kazdym razem odkrywam w niej cos nowego.</p><p>Historia rodu Buendia to metafora calej Ameryki Lacinskiej - pelna magii, tragedii i nieuchronnego losu.</p><br><p>Realizm magiczny w najczystszej formie.</p><p><span>Lektura obowiazkowa dla kazdego milosnika literatury.</span></p>"
+  },
+  {
+    "id": 4,
+    "author_id": 104,
+    "author_username": "nocny_czytelnik",
+    "created_at": "2026-01-12T23:10:00",
+    "updated_at": "2026-01-13T08:30:00",
+    "image": "https://images.unsplash.com/photo-1476275466078-4007374efbbe?w=800",
+    "content": "<p>Wlasnie przeczytalem <span>Zabic drozda</span> Harper Lee</p><br><p>Czemu tak dlugo zwlekalem z ta lektura?!</p><p>Atticus Finch to jeden z najwspanialszych bohaterow literackich jakich znam.</p><br><p>Ksiazka o rasizmie, sprawiedliwosci i dorastaniu w Alabamie lat 30.</p><p>Napisana z perspektywy dziecka, ale poruszajaca dorosle tematy.</p><br><p><span>Klasyka, ktora nie traci na aktualnosci.</span></p>"
+  },
+  {
+    "id": 5,
+    "author_id": 101,
+    "author_username": "bookworm_anna",
+    "created_at": "2026-01-10T16:00:00",
+    "updated_at": "2026-01-10T16:00:00",
+    "image": "https://images.unsplash.com/photo-1589998059171-988d887df646?w=800",
+    "content": "<p>Mini recenzja: <span>Norwegian Wood</span> - Haruki Murakami</p><br><p>Melancholijna historia o milosci, stracie i dorastaniu w Japonii lat 60.</p><p>Murakami pisze w sposob hipnotyzujacy - proste slowa, glebokie emocje.</p><br><p>Ksiazka, przy ktorej sie placze.</p><p><span>Ocena: 4/5</span></p>"
+  },
+  {
+    "id": 6,
+    "author_id": 105,
+    "author_username": "fantasy_fan_pl",
+    "created_at": "2026-01-08T11:20:00",
+    "updated_at": "2026-01-08T11:20:00",
+    "image": "https://images.unsplash.com/photo-1518744386442-2d48ac47a303?w=800",
+    "content": "<p><span>Imie wiatru</span> - Patrick Rothfuss</p><br><p>Kvothe to jeden z najbardziej fascynujacych protagonistow fantasy!</p><p>Historia opowiedziana w formie retrospekcji - legendarny bohater opowiada swoja prawdziwa historie.</p><br><p>Piekny jezyk, swietnie zbudowany swiat, magia oparta na logice.</p><p>Minus? Trzeci tom chyba nigdy nie wyjdzie...</p><br><p><span>Ale i tak warto przeczytac!</span></p>"
+  }
+]

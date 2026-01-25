@@ -28,7 +28,34 @@
     </div>
   </nav>
 
-<main class="container py-4">
+<main class="container py-5">
     {% block content %}{% endblock %}
- </main>
+</main>
+
+<!-- Panel komentarzy -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="commentsPanel" aria-labelledby="commentsPanelLabel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="commentsPanelLabel">Komentarze</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Zamknij"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+        <div id="comments-list" class="flex-grow-1 overflow-auto">
+            <!-- Komentarze będą ładowane tutaj -->
+        </div>
+        
+        <!-- Formularz dodawania komentarza -->
+        <form id="comment-form" class="border-top pt-3 mt-3">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Napisz komentarz..." id="comment-input">
+                <button class="btn btn-dark" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11Z"/>
+                    </svg>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/comments.js') }}"></script>
 {% endblock %}

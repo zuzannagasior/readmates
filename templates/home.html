@@ -3,6 +3,41 @@
 {% block title %}Strona główna{% endblock %}
 
 {% block content %}
-<h1>Witaj w Readmates!</h1>
-<p>Lista postów...</p>
+
+<div id="posts-container" class="d-flex flex-column gap-5 justify-content-center align-items-center" role="list" data-has-more="{{ 'true' if has_more else 'false' }}">
+    {% for post in posts %}
+    <article class="position-relative col-md-5 small" role="listitem">
+    <div class="text-muted flex-shrink-0 article-date">
+        {{ post['created_at'][:10] }}
+    </div>
+    <div class="d-flex flex-column">
+        <div class="w-100 rounded-3 overflow-hidden mb-3">
+            <img src="{{ post['image'] }}" class="img-fluid object-fit-cover">
+        </div>
+        <a href="{{ url_for('user', username=post['author_username']) }}" class="text-decoration-none text-dark fw-bold">@{{ post['author_username'] }}</a>
+        <div>{{ post['content'] | safe }}</div>
+    </div>
+    <div>
+        <button class="btn btn-sm btn-outline-secondary comments-btn" 
+                data-bs-toggle="offcanvas" 
+                data-bs-target="#commentsPanel"
+                data-post-id="{{ post['id'] }}">
+            Komentarze (10)
+        </button>
+    </div>
+    </article>
+    {% endfor %}
+</div>
+
+<div id="loader" class="d-flex justify-content-center py-5 {% if not has_more %}d-none{% endif %}">
+    <div class="spinner-border text-secondary" role="status">
+        <span class="visually-hidden">Ładowanie...</span>
+    </div>
+</div>
+
+<div id="end-message" class="small text-center text-muted py-4 mt-5 d-none border-top col-md-5 mx-auto">
+    Nie ma więcej postów
+</div>
+
+<script src="{{ url_for('static', filename='js/posts-infinite-scroll.js') }}"></script>
 {% endblock %}

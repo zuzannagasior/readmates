@@ -1,13 +1,59 @@
-from flask import flash, redirect, render_template, url_for
-
+import json
+from pathlib import Path
+from flask import flash, jsonify, redirect, render_template, request, url_for
 from forms import LoginForm, RegistrationForm
+
+POSTS_PER_PAGE = 3
+
+
+def load_posts():
+    """Wczytuje testowe dane postów z pliku JSON."""
+    posts_path = Path(__file__).parent / 'data' / 'posts.json'
+    with open(posts_path, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+
+def load_comments():
+    """Wczytuje testowe dane komentarzy z pliku JSON."""
+    comments_path = Path(__file__).parent / 'data' / 'comments.json'
+    with open(comments_path, 'r', encoding='utf-8') as f:
+        return json.load(f)
 
 
 def register_routes(app):
     @app.route('/')
     def home():
-        # TODO: Pobierz dane z bazy danych
-        return render_template('home.html')
+        posts = load_posts()
+        initial_posts = posts[:POSTS_PER_PAGE]
+        has_more = len(posts) > POSTS_PER_PAGE
+        return render_template('home.html', posts=initial_posts, has_more=has_more)
+
+    @app.route('/api/posts')
+    def api_posts():
+        page = request.args.get('page', 1, type=int)
+        posts = load_posts()
+        
+        start = (page - 1) * POSTS_PER_PAGE
+        end = start + POSTS_PER_PAGE
+        paginated_posts = posts[start:end]
+        
+        has_more = end < len(posts)
+        
+        return jsonify({
+            'posts': paginated_posts,
+            'has_more': has_more,
+            'page': page
+        })
+
+    @app.route('/api/posts/<int:post_id>/comments')
+    def api_comments(post_id):
+        """Endpoint API do pobierania komentarzy posta."""
+        comments = load_comments()
+        post_comments = comments.get(str(post_id), [])
+        return jsonify({
+            'comments': post_comments,
+            'count': len(post_comments)
+        })
 
     @app.route('/post/<int:id>')
     def show_post(id):
