@@ -62,8 +62,10 @@ def register_routes(app):
 
     @app.route('/<string:username>')
     def user(username):
-        # TODO: Pobierz dane z bazy danych
-        return render_template('user.html', username=username)
+        posts = load_posts()
+        latest_post = posts[0]
+        other_posts = posts[1:]
+        return render_template('user.html', username=username, latest_post=latest_post, other_posts=other_posts, posts_count=len(posts), comments_count=100)
 
     @app.route('/create')
     def create():
