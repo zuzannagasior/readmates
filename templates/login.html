@@ -7,13 +7,13 @@
 {% block content %}
 
 <form method="POST" action="{{ url_for('login') }}" class="d-flex flex-column gap-3">
-    {{ form.hidden_tag() }}  
+    {{ form.hidden_tag() }}
 
     <div>
         {{ form.username.label(class="form-label") }}
         {{ form.username(class="form-control form-control-sm") }}
         {% if form.username.errors %}
-            <span class="error">{{ form.username.errors[0] }}</span>
+        <span class="error">{{ form.username.errors[0] }}</span>
         {% endif %}
     </div>
 
@@ -21,13 +21,14 @@
         {{ form.password.label(class="form-label") }}
         {{ form.password(class="form-control form-control-sm") }}
         {% if form.password.errors %}
-            <span class="error">{{ form.password.errors[0] }}</span>
+        <span class="error">{{ form.password.errors[0] }}</span>
         {% endif %}
     </div>
 
-    {{ form.submit(class="btn btn-primary") }}
+    {{ form.submit(class="btn btn-outline-secondary") }}
 
-    <p class="text-center small text-muted">Nie masz jeszcze konta? <a href="{{ url_for('register') }}">Zarejestruj się</a></p>
+    <p class="text-center small text-muted">Nie masz jeszcze konta? <a href="{{ url_for('register') }}">Zarejestruj
+            się</a></p>
 </form>
 
 

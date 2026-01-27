@@ -14,7 +14,7 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .logo-medium {
     width: auto;
-    height: 100px;
+    height: 60px;
 }
 
 .logo-large {
@@ -27,6 +27,14 @@ p, h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
     font-style: normal;
     font-size: 40px;
+    line-height: 100%;
+}
+
+.logo-text-medium {
+    font-family: "Meow Script", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 60px;
     line-height: 100%;
 }
 
@@ -88,4 +96,52 @@ p, h1, h2, h3, h4, h5, h6 {
     object-position: center center;
     width: 100%;
     height: 100%;
+}
+
+/* CREATE POST MODAL */
+.modal.fade .modal-dialog {
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+}
+
+.modal.show .modal-dialog {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: var(--bs-body-bg);
+}
+
+.modal-header .btn-close {
+   position: absolute;
+   right: 16px;
+   top: 16px;
+}
+
+.file-upload-area {
+    position: relative;
+    width: 50%;
+    border: 1px dashed var(--bs-border-color);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-upload-area:hover {
+    border-color: #000;
+}
+
+.file-upload-area input {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   opacity: 0;
+   cursor: pointer;
 }

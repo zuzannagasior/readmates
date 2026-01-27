@@ -4,10 +4,10 @@
 
 {% block body %}
 <div class="d-flex flex-column align-items-center justify-content-center min-vh-100">
-  <div class="d-flex flex-column gap-4">
+  <div class="d-flex flex-column gap-4 col-md-4 mx-auto">
     <header class="d-flex flex-column justify-content-center align-items-center gap-3">
       <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo" class="logo-medium" />
-      <span class="logo-text-large">Readmates</span>
+      <span class="logo-text-medium">Readmates</span>
     </header>
 
     <main>
@@ -15,7 +15,7 @@
 
       {% block content %}{% endblock %}
     </main>
- </div>
   </div>
+</div>
 </div>
 {% endblock %}

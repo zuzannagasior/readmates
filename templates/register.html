@@ -5,13 +5,13 @@
 
 {% block content %}
 <form method="POST" action="{{ url_for('register') }}" class="d-flex flex-column gap-3">
-    {{ form.hidden_tag() }}  
+    {{ form.hidden_tag() }}
 
     <div>
         {{ form.email.label }}
         {{ form.email(class="form-control") }}
         {% if form.email.errors %}
-            <span class="error">{{ form.email.errors[0] }}</span>
+        <span class="error">{{ form.email.errors[0] }}</span>
         {% endif %}
     </div>
 
@@ -19,7 +19,7 @@
         {{ form.username.label }}
         {{ form.username(class="form-control") }}
         {% if form.username.errors %}
-            <span class="error">{{ form.username.errors[0] }}</span>
+        <span class="error">{{ form.username.errors[0] }}</span>
         {% endif %}
     </div>
 
@@ -27,7 +27,7 @@
         {{ form.password.label }}
         {{ form.password(class="form-control") }}
         {% if form.password.errors %}
-            <span class="error">{{ form.password.errors[0] }}</span>
+        <span class="error">{{ form.password.errors[0] }}</span>
         {% endif %}
     </div>
 
@@ -35,11 +35,11 @@
         {{ form.confirm_password.label }}
         {{ form.confirm_password(class="form-control") }}
         {% if form.confirm_password.errors %}
-            <span class="error">{{ form.confirm_password.errors[0] }}</span>
+        <span class="error">{{ form.confirm_password.errors[0] }}</span>
         {% endif %}
     </div>
 
-    {{ form.submit(class="btn btn-primary") }}
+    {{ form.submit(class="btn btn-outline-secondary") }}
 
     <p class="text-center small text-muted">Masz już konto? <a href="{{ url_for('login') }}">Zaloguj się</a></p>
 

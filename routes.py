@@ -67,9 +67,13 @@ def register_routes(app):
         other_posts = posts[1:]
         return render_template('user.html', username=username, latest_post=latest_post, other_posts=other_posts, posts_count=len(posts), comments_count=100)
 
-    @app.route('/create')
+    @app.route('/create', methods=['POST'])
     def create():
-        return render_template('create_post.html')
+        image = request.form.get('image')
+        content = request.form.get('content')
+        # TODO: Zapisz post do bazy danych
+        flash('Post został opublikowany!', 'success')
+        return redirect(url_for('user', username='admin'))
 
 
     @app.route('/login', methods=['GET', 'POST'])
@@ -103,3 +107,6 @@ def register_routes(app):
                    
         return render_template('register.html', form=form)
         
+    @app.route('/logout')
+    def logout():
+        return redirect(url_for('login'))
