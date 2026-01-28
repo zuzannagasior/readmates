@@ -145,3 +145,27 @@ p, h1, h2, h3, h4, h5, h6 {
    opacity: 0;
    cursor: pointer;
 }
+
+/* alert */
+
+@keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px) translateX(-50%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) translateX(-50%);
+    }
+  }
+  
+  .alert-animated {
+    animation: slideUp 0.3s ease-out;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    bottom: 0;
+    position: fixed;
+    width: 300px;
+    text-align: center;
+  }

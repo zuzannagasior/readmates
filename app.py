@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, session
 from flask_wtf.csrf import CSRFProtect
 from database import db
 from routes import register_routes
@@ -17,9 +17,12 @@ with app.app_context():
 
 @app.context_processor
 def inject_user():
-    current_user = {
-        'username': 'admin',
-    }
+    from models import User
+    user_id = session.get('user_id')
+    if user_id:
+        current_user = User.query.get(user_id)
+    else:
+        current_user = None
     return dict(current_user=current_user)
 
 if __name__ == '__main__':
