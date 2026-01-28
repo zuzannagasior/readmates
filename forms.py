@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from flask_wtf.file import FileField, FileRequired, FileAllowed
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 class LoginForm(FlaskForm):
@@ -19,3 +20,13 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField('Potwierdź hasło',
                                     validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Zarejestruj')
+
+
+class CreatePostForm(FlaskForm):
+    title = StringField('Tytuł',
+                        validators=[DataRequired(), Length(min=3, max=200)])
+    content = TextAreaField('Treść',
+                            validators=[DataRequired()])
+    image = FileField('Zdjęcie',
+                      validators=[FileRequired(), FileAllowed(['png', 'jpg', 'jpeg', 'gif', 'webp'], 'Only images are allowed')])
+    submit = SubmitField('Opublikuj')

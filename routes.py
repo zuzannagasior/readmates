@@ -1,19 +1,16 @@
+import os
+import uuid
 import json
 from pathlib import Path
-from flask import flash, jsonify, redirect, render_template, request, session, url_for
+from flask import flash, jsonify, redirect, render_template, request, session, url_for, current_app
 from database import db
-from forms import LoginForm, RegistrationForm
+from forms import CreatePostForm, LoginForm, RegistrationForm
 from models import User
 from functools import wraps
+from werkzeug.utils import secure_filename
+from models import User, Post
 
 POSTS_PER_PAGE = 3
-
-
-def load_posts():
-    """Wczytuje testowe dane postów z pliku JSON."""
-    posts_path = Path(__file__).parent / 'data' / 'posts.json'
-    with open(posts_path, 'r', encoding='utf-8') as f:
-        return json.load(f)
 
 
 def load_comments():
@@ -38,33 +35,20 @@ def api_login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
 
 def register_routes(app):
     @app.route('/')
     @login_required
     def home():
-        posts = load_posts()
+        posts = Post.query.order_by(Post.created_at.desc()).all()
         initial_posts = posts[:POSTS_PER_PAGE]
         has_more = len(posts) > POSTS_PER_PAGE
+
         return render_template('home.html', posts=initial_posts, has_more=has_more)
 
-    @app.route('/api/posts')
-    @api_login_required
-    def api_posts():
-        page = request.args.get('page', 1, type=int)
-        posts = load_posts()
-        
-        start = (page - 1) * POSTS_PER_PAGE
-        end = start + POSTS_PER_PAGE
-        paginated_posts = posts[start:end]
-        
-        has_more = end < len(posts)
-        
-        return jsonify({
-            'posts': paginated_posts,
-            'has_more': has_more,
-            'page': page
-        })
 
     @app.route('/api/posts/<int:post_id>/comments')
     @api_login_required
@@ -86,20 +70,53 @@ def register_routes(app):
     @app.route('/<string:username>')
     @login_required
     def user(username):
-        posts = load_posts()
+        user = User.query.filter_by(username=username).first()
+        if not user:
+            # TODO: Wyświetl stronę 404
+            return redirect(url_for('home'))
+        posts = Post.query.filter_by(user_id=user.id).order_by(Post.created_at.desc()).all()
         latest_post = posts[0]
         other_posts = posts[1:]
-        return render_template('user.html', username=username, latest_post=latest_post, other_posts=other_posts, posts_count=len(posts), comments_count=100)
+        return render_template('user.html', username=user.username, latest_post=latest_post, other_posts=other_posts, posts_count=len(posts), comments_count=100)
 
     @app.route('/create', methods=['POST'])
     @login_required
     def create():
-        image = request.form.get('image')
-        content = request.form.get('content')
-        # TODO: Zapisz post do bazy danych
-        flash('Post został opublikowany!', 'success')
-        return redirect(url_for('user', username='admin'))
+        form = CreatePostForm()
 
+        if form.validate_on_submit():
+            file = form.image.data
+           
+            if file and allowed_file(file.filename):
+                ext = file.filename.rsplit('.', 1)[1].lower()
+                filename = f"{uuid.uuid4().hex}.{ext}"
+
+                filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+                file.save(filepath)
+
+                image_url = f"uploads/{filename}"
+            else:
+                flash('Nieprawidłowy format pliku', 'error')
+                return redirect(url_for('home'))
+
+            post = Post(
+                title=form.title.data,
+                content=form.content.data,
+                image_url=image_url,
+                user_id=session['user_id']
+            )
+
+            db.session.add(post)
+            db.session.commit()
+
+        else:
+            flash('Popraw błędy w formularzu', 'error')
+            return redirect(url_for('home'))
+            
+        flash('Post został zapisany!', 'success')
+        return redirect(url_for('user', username=session['username']))
+
+  
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():

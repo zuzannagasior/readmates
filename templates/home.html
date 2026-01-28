@@ -4,27 +4,27 @@
 
 {% block content %}
 
-<div id="posts-container" class="d-flex flex-column gap-5 justify-content-center align-items-center" role="list" data-has-more="{{ 'true' if has_more else 'false' }}">
+<div id="posts-container" class="d-flex flex-column gap-5 justify-content-center align-items-center" role="list"
+    data-has-more="{{ 'true' if has_more else 'false' }}">
     {% for post in posts %}
     <article class="position-relative col-md-5 small" role="listitem">
-    <div class="text-muted flex-shrink-0 article-date">
-        {{ post['created_at'][:10] }}
-    </div>
-    <div class="d-flex flex-column">
-        <div class="w-100 rounded-3 overflow-hidden mb-3">
-            <img src="{{ post['image'] }}" class="img-fluid object-fit-cover">
+        <div class="text-muted flex-shrink-0 article-date">
+            {{ post.created_at.strftime('%Y-%m-%d') }}
         </div>
-        <a href="{{ url_for('user', username=post['author_username']) }}" class="text-decoration-none text-dark fw-bold">@{{ post['author_username'] }}</a>
-        <div>{{ post['content'] | safe }}</div>
-    </div>
-    <div>
-        <button class="btn btn-sm btn-outline-secondary comments-btn" 
-                data-bs-toggle="offcanvas" 
-                data-bs-target="#commentsPanel"
-                data-post-id="{{ post['id'] }}">
-            Komentarze (10)
-        </button>
-    </div>
+        <div class="d-flex flex-column">
+            <div class="w-100 rounded-3 overflow-hidden mb-3">
+                <img src="{{ url_for('static', filename=post.image_url) }}" class="img-fluid object-fit-cover">
+            </div>
+            <a href="{{ url_for('user', username=post.author.username) }}"
+                class="text-decoration-none text-dark fw-bold">@{{ post.author.username }}</a>
+            <div>{{ post.content | safe }}</div>
+        </div>
+        <div>
+            <button class="btn btn-sm btn-outline-secondary comments-btn" data-bs-toggle="offcanvas"
+                data-bs-target="#commentsPanel" data-post-id="{{ post.id }}">
+                Komentarze (10)
+            </button>
+        </div>
     </article>
     {% endfor %}
 </div>

@@ -80,31 +80,52 @@
         <h5 class="modal-title" id="createPostModalLabel">Nowy post</h5>
         <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Zamknij"></button>
       </div>
-      <form action="{{ url_for('create') }}" method="POST">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <form method="POST" action="{{ url_for('create') }}" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
         <div class="modal-body d-flex gap-3">
-          <div class="file-upload-area">
-            <input type="file" class="form-control" id="post-image" name="image">
+          <div id="file-upload-area" class="file-upload-area">
+            {{ form.image.label(class="visually-hidden") }}
+            {{ form.image(class="form-control form-control-sm", accept="image/*") }}
+
             <span class="text-muted">Kliknij aby wybrać plik</span>
           </div>
+
+          <div id="image-preview" class="image-preview d-none">
+            <img id="image-preview-img" src="" alt="Podgląd" class="img-fluid">
+
+            <button id="remove-image-btn" type="button" aria-label="Usuń zdjęcie">
+              <i class=" bi bi-x-lg"></i>
+            </button>
+          </div>
+
           <div class="d-flex flex-column gap-3 flex-grow-1">
             <div>
-              <label for="post-title" class="form-label visually-hidden">Tytuł</label>
-              <input type="text" class="form-control" id="post-title" name="title" placeholder="Tytuł posta/książki...">
+              {{ form.title.label(class="visually-hidden") }}
+              {{ form.title(class="form-control", placeholder="Tytuł posta/książki...") }}
+              {% if form.title.errors %}
+              <span class="error text-danger">{{ form.title.errors[0] }}</span>
+              {% endif %}
             </div>
             <div>
-              <label for="post-content" class="form-label visually-hidden">Treść</label>
-              <textarea class="form-control" id="post-content" name="content" rows="20" required></textarea>
+              {{ form.content.label(class="visually-hidden") }}
+              {{ form.content(class="form-control", rows="20", placeholder="Treść...") }}
+              {% if form.content.errors %}
+              <span class="error text-danger">{{ form.content.errors[0] }}</span>
+              {% endif %}
             </div>
           </div>
         </div>
+
+        <footer class="d-flex justify-content-end p-3 pt-0">
+          {{ form.submit(class="btn btn-outline-secondary") }}
+        </footer>
       </form>
-      <footer class="d-flex justify-content-end p-3 pt-0">
-        <button type="submit" class="btn btn-outline-secondary">Opublikuj</button>
-      </footer>
+
     </div>
   </div>
 </div>
 
 <script src="{{ url_for('static', filename='js/comments.js') }}"></script>
+<script src="{{ url_for('static', filename='js/image-preview.js') }}"></script>
 {% endblock %}
