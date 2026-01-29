@@ -21,6 +21,26 @@
                     <time class="text-muted small" datetime="{{ post.created_at.isoformat() }}">
                         {{ post.created_at.strftime('%d.%m.%Y, %H:%M') }}
                     </time>
+
+                    {% if session.get('user_id') == post.user_id %}
+                    <div class="dropdown ms-auto">
+                        <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bi bi-three-dots"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <form action="{{ url_for('delete_post', id=post.id) }}" method="POST"
+                                    onsubmit="return confirm('Czy na pewno chcesz usunąć ten post?');">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button type="submit" class="dropdown-item text-danger">
+                                        <i class="bi bi-trash me-2"></i>Usuń
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    {% endif %}
                 </header>
 
                 {% if post.image_url %}

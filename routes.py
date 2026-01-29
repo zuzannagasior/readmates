@@ -67,6 +67,26 @@ def register_routes(app):
         post = Post.query.get_or_404(id)
         return render_template('post.html', post=post)
 
+    @app.route('/post/<int:id>/delete', methods=['POST'])
+    @login_required
+    def delete_post(id):
+        post = Post.query.get_or_404(id)
+        
+        if post.user_id != session['user_id']:
+            flash('Nie masz uprawnień do usunięcia tego posta', 'error')
+            return redirect(url_for('show_post', id=id))
+        
+        if post.image_url:
+            image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], os.path.basename(post.image_url))
+            if os.path.exists(image_path):
+                os.remove(image_path)
+        
+        db.session.delete(post)
+        db.session.commit()
+        
+        flash('Post został usunięty', 'success')
+        return redirect(url_for('user', username=session['username']))
+
     @app.route('/<string:username>')
     @login_required
     def user(username):
