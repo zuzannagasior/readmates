@@ -238,3 +238,29 @@ input:focus-visible, textarea:focus-visible {
     max-height: 500px;
     object-fit: contain;
 }
+
+.read-more-link {
+  display: inline-flex;
+  color: #6c757d;
+  text-decoration: none;
+  font-size: inherit;
+  margin-top: 2px;
+  margin-left: auto;
+}
+
+.read-more-link:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+
+/* utils */
+
+.truncate-long-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

@@ -7,7 +7,7 @@
 <div id="posts-container" class="d-flex flex-column gap-5 justify-content-center align-items-center" role="list"
     data-has-more="{{ 'true' if has_more else 'false' }}">
     {% for post in posts %}
-    <article class="position-relative col-md-5 small" role="listitem">
+    <article class="position-relative col-md-4 small" role="listitem">
         <div class="text-muted flex-shrink-0 article-date">
             {{ post.created_at.strftime('%Y-%m-%d') }}
         </div>
@@ -17,14 +17,14 @@
             </div>
             <a href="{{ url_for('user', username=post.author.username) }}"
                 class="text-decoration-none text-dark fw-bold">@{{ post.author.username }}</a>
-            <div>{{ post.content | safe }}</div>
+            <div class="truncate-long-text">{{ post.content | safe }}</div>
+            <a href="{{ url_for('show_post', id=post.id) }}" class="read-more-link">zobacz całość</a>
         </div>
-        <div class="d-flex justify-content-between mt-2 align-items-center">
+        <div class=" d-flex justify-content-between mt-2 align-items-center">
             <button class="btn btn-sm btn-outline-secondary comments-btn" data-bs-toggle="offcanvas"
                 data-bs-target="#commentsPanel" data-post-id="{{ post.id }}">
                 Komentarze (10)
             </button>
-
             <button class="save-post-btn">
                 <i class="bi bi-bookmark-heart"></i>
             </button>
