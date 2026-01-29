@@ -30,12 +30,13 @@ def inject_globals():
     user_id = session.get('user_id')
     if user_id:
         current_user = User.query.get(user_id)
-        create_post_form = CreatePostForm()
+        create_form = CreatePostForm()
     else:
         current_user = None
-        create_post_form = None
+        create_form = None
+
     
-    return dict(current_user=current_user, form=create_post_form)
+    return dict(current_user=current_user, create_form=create_form)
 
 if __name__ == '__main__':
     app.run(debug=True)

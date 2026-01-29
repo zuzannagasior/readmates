@@ -5,7 +5,6 @@
 {% block body %}
 <nav class="navbar navbar-expand-lg my-3">
   <div class="container position-relative">
-    <!-- Navbar brand wycentrowany absolutnie -->
     <a class="navbar-brand d-flex align-items-center gap-1 position-absolute start-50 translate-middle-x"
       href="{{ url_for('home') }}">
       <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo" class="logo-small mb-2px">
@@ -46,32 +45,6 @@
   {% block content %}{% endblock %}
 </main>
 
-<!-- Panel komentarzy -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="commentsPanel" aria-labelledby="commentsPanelLabel">
-  <div class="offcanvas-header border-bottom">
-    <h5 class="offcanvas-title" id="commentsPanelLabel">Komentarze</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Zamknij"></button>
-  </div>
-  <div class="offcanvas-body d-flex flex-column">
-    <div id="comments-list" class="flex-grow-1 overflow-auto">
-      <!-- Komentarze będą ładowane tutaj -->
-    </div>
-
-    <!-- Formularz dodawania komentarza -->
-    <form id="comment-form" class="border-top pt-3 mt-3">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Napisz komentarz..." id="comment-input">
-        <button class="btn btn-dark" type="submit">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path
-              d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11Z" />
-          </svg>
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
-
 <!-- CREATE POST MODAL -->
 <div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -81,12 +54,12 @@
         <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Zamknij"></button>
       </div>
       <form method="POST" action="{{ url_for('create') }}" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
+        {{ create_form.hidden_tag() }}
 
         <div class="modal-body d-flex gap-3">
           <div id="file-upload-area" class="file-upload-area">
-            {{ form.image.label(class="visually-hidden") }}
-            {{ form.image(class="form-control form-control-sm", accept="image/*") }}
+            {{ create_form.image.label(class="visually-hidden") }}
+            {{ create_form.image(class="form-control form-control-sm", accept="image/*") }}
 
             <span class="text-muted">Kliknij aby wybrać plik</span>
           </div>
@@ -101,24 +74,24 @@
 
           <div class="d-flex flex-column gap-3 flex-grow-1">
             <div>
-              {{ form.title.label(class="visually-hidden") }}
-              {{ form.title(class="form-control", placeholder="Tytuł posta/książki...") }}
-              {% if form.title.errors %}
-              <span class="error text-danger">{{ form.title.errors[0] }}</span>
+              {{ create_form.title.label(class="visually-hidden") }}
+              {{ create_form.title(class="form-control", placeholder="Tytuł posta/książki...") }}
+              {% if create_form.title.errors %}
+              <span class="error text-danger">{{ create_form.title.errors[0] }}</span>
               {% endif %}
             </div>
             <div>
-              {{ form.content.label(class="visually-hidden") }}
-              {{ form.content(class="form-control", rows="20", placeholder="Treść...") }}
-              {% if form.content.errors %}
-              <span class="error text-danger">{{ form.content.errors[0] }}</span>
+              {{ create_form.content.label(class="visually-hidden") }}
+              {{ create_form.content(class="form-control", rows="20", placeholder="Treść...") }}
+              {% if create_form.content.errors %}
+              <span class="error text-danger">{{ create_form.content.errors[0] }}</span>
               {% endif %}
             </div>
           </div>
         </div>
 
         <footer class="d-flex justify-content-end p-3 pt-0">
-          {{ form.submit(class="btn btn-outline-secondary") }}
+          {{ create_form.submit(class="btn btn-outline-secondary") }}
         </footer>
       </form>
 
@@ -126,6 +99,5 @@
   </div>
 </div>
 
-<script src="{{ url_for('static', filename='js/comments.js') }}"></script>
 <script src="{{ url_for('static', filename='js/image-preview.js') }}"></script>
 {% endblock %}

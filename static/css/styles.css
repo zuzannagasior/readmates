@@ -79,11 +79,8 @@ input:focus-visible, textarea:focus-visible {
     overflow: hidden;
 }
 
-.latest-post-image {
-   position: relative;
-}
 
-.article-profile-card div::after, .latest-post-image::after {
+.article-profile-card div::after{
     content: attr(data-title);
     display: flex;
     align-items: center;
@@ -100,7 +97,7 @@ input:focus-visible, textarea:focus-visible {
     backdrop-filter: blur(2px);
 }
 
-.article-profile-card div:hover::after, .latest-post-image:hover::after {
+.article-profile-card div:hover::after {
     opacity: 1;
 }
 
@@ -241,7 +238,7 @@ input:focus-visible, textarea:focus-visible {
 
 .read-more-link {
   display: inline-flex;
-  color: #6c757d;
+  color: var(--bs-body-color);
   text-decoration: none;
   font-size: inherit;
   margin-top: 2px;
@@ -253,14 +250,32 @@ input:focus-visible, textarea:focus-visible {
   text-decoration: underline;
 }
 
+.comments-link {
+  font-size: 14px;
+  transform: translateY(-1px);
+}
+
+.comments-link i {
+  font-size: 24px;
+}
 
 /* utils */
 
-.truncate-long-text {
+.truncate-medium-text {
   display: -webkit-box;
   -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+
+.truncate-long-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 

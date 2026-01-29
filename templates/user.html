@@ -34,17 +34,25 @@
 {% if latest_post %}
 <h2 class="mb-4 fs-4">Ostatni post</h2>
 <section class="d-flex mx-auto gap-5">
-    <a href="{{ url_for('show_post', id=latest_post.id) }}"
-        class="col-md-5 rounded-3 overflow-hidden mb-3 latest-post-image" data-title="Zobacz post">
+    <div class="col-md-5 rounded-3 overflow-hidden mb-3">
         <img src="{{ url_for('static', filename=latest_post.image_url) }}" class="img-fluid object-fit-cover">
-    </a>
+    </div>
 
-    <div>
-        <div class="text-muted flex-shrink-0">
+    <div class="d-flex flex-column">
+        <div class="text-muted flex-shrink-0 mb-3">
             {{ latest_post.created_at.strftime('%Y-%m-%d') }}
         </div>
         <h3 class="h5">{{ latest_post.title }}</h3>
-        <div>{{ latest_post.content | safe }}</div>
+        <div class="truncate-long-text">{{ latest_post.content | safe }}</div>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex mt-2 align-items-center gap-3">
+                <a href="{{ url_for('show_post', id=latest_post.id) }}#comments"
+                    class="comments-link text-muted text-decoration-none small d-flex align-items-center gap-1">
+                    <i class="bi bi-chat"></i> {{ latest_post.comments.count() }}
+                </a>
+            </div>
+            <a href="{{ url_for('show_post', id=latest_post.id) }}" class="read-more-link">zobacz całość</a>
+        </div>
     </div>
 </section>
 {% else %}
@@ -52,20 +60,27 @@
 {% endif %}
 
 
-{% for post in other_posts %}
+{% if other_posts %}
 <h2 class="mb-4 mt-5 fs-4">Zobacz więcej</h2>
-<div id="posts-container" class="row row-cols-3 g-2 mb-4" role="list">
+<div id="posts-container" class="row row-cols-3 g-3 mb-4" role="list">
     {% for post in other_posts %}
-    <article class="position-relative col small article-profile-card" role="listitem">
-        <a href="{{ url_for('show_post', id=post.id) }}">
-            <div class="w-100 rounded-3 overflow-hidden mb-3" data-title="{{ post.title }}">
-                <img src="{{ url_for('static', filename=post.image_url) }}" class="object-fit-cover">
+    <article class="col small" role="listitem">
+        <a href="{{ url_for('show_post', id=post.id) }}" class="text-decoration-none">
+            <div class="w-100 rounded-3 overflow-hidden mb-2">
+                <img src="{{ url_for('static', filename=post.image_url) }}" class="img-fluid object-fit-cover w-100">
             </div>
         </a>
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="{{ url_for('show_post', id=post.id) }}" class="read-more-link small">zobacz post</a>
+            <a href="{{ url_for('show_post', id=post.id) }}#comments"
+                class="text-muted text-decoration-none small d-flex align-items-center gap-1">
+                <i class="bi bi-chat"></i> {{ post.comments.count() }}
+            </a>
+        </div>
     </article>
     {% endfor %}
 </div>
-{% endfor %}
+{% endif %}
 
 <h2 class="mb-4 mt-5 fs-4">Zapisane w bibliotece</h2>
 <p class="text-muted">Brak zapisanych książek</p>

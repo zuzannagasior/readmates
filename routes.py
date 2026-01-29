@@ -1,23 +1,13 @@
 import os
 import uuid
-import json
-from pathlib import Path
 from flask import flash, jsonify, redirect, render_template, request, session, url_for, current_app
 from database import db
-from forms import CreatePostForm, LoginForm, RegistrationForm
-from models import User
+from forms import CommentForm, CreatePostForm, LoginForm, RegistrationForm
+from models import Comment, User, Post
 from functools import wraps
 from werkzeug.utils import secure_filename
-from models import User, Post
 
 POSTS_PER_PAGE = 3
-
-
-def load_comments():
-    """Wczytuje testowe dane komentarzy z pliku JSON."""
-    comments_path = Path(__file__).parent / 'data' / 'comments.json'
-    with open(comments_path, 'r', encoding='utf-8') as f:
-        return json.load(f)
 
 def login_required(f):
     @wraps(f)
@@ -48,24 +38,40 @@ def register_routes(app):
         has_more = len(posts) > POSTS_PER_PAGE
 
         return render_template('home.html', posts=initial_posts, has_more=has_more)
-
-
-    @app.route('/api/posts/<string:post_id>/comments')
-    @api_login_required
-    def api_comments(post_id):
-        """Endpoint API do pobierania komentarzy posta."""
-        comments = load_comments()
-        post_comments = comments.get(str(post_id), [])
-        return jsonify({
-            'comments': post_comments,
-            'count': len(post_comments)
-        })
-
+      
     @app.route('/post/<string:id>')
     @login_required
     def show_post(id):
         post = Post.query.get_or_404(id)
-        return render_template('post.html', post=post)
+        comments = Comment.query.filter_by(post_id=id).order_by(Comment.created_at.desc()).all()
+        comment_form = CommentForm()
+        return render_template('post.html', post=post, comments=comments, comment_form=comment_form)
+
+    @app.route('/post/<string:id>/comment', methods=['POST'])
+    @login_required
+    def add_comment(id):
+        post = Post.query.get_or_404(id)
+        form = CommentForm()
+        
+        if form.validate_on_submit():
+            comment = Comment(
+                content=form.content.data,
+                post_id=id,
+                user_id=session['user_id']
+            )
+            db.session.add(comment)
+            db.session.commit()
+        
+        if request.headers.get('HX-Request'):
+            comments = Comment.query.filter_by(post_id=id).order_by(Comment.created_at.desc()).all()
+            comment_form = CommentForm()
+            return render_template('partials/comments.html', post=post, comments=comments, comment_form=comment_form, is_htmx=True)
+        
+        if form.validate_on_submit():
+            flash('Komentarz został dodany', 'success')
+        else:
+            flash('Error. Spróbuj ponownie później', 'error')
+        return redirect(url_for('show_post', id=id))
 
     @app.route('/post/<string:id>/delete', methods=['POST'])    
     @login_required
@@ -95,9 +101,11 @@ def register_routes(app):
             # TODO: Wyświetl stronę 404
             return redirect(url_for('home'))
         posts = Post.query.filter_by(user_id=user.id).order_by(Post.created_at.desc()).all()
-        latest_post = posts[0]
-        other_posts = posts[1:]
-        return render_template('user.html', username=user.username, latest_post=latest_post, other_posts=other_posts, posts_count=len(posts), comments_count=100)
+        latest_post = posts[0] if posts else None
+        other_posts = posts[1:] if posts else []
+        comments_count = user.comments_count()
+
+        return render_template('user.html', username=user.username, latest_post=latest_post, other_posts=other_posts, posts_count=len(posts), comments_count=user.comments_count())
 
     @app.route('/create', methods=['POST'])
     @login_required
@@ -135,8 +143,6 @@ def register_routes(app):
             
         flash('Post został zapisany!', 'success')
         return redirect(url_for('user', username=session['username']))
-
-  
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():

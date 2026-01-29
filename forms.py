@@ -30,3 +30,8 @@ class CreatePostForm(FlaskForm):
     image = FileField('Zdjęcie',
                       validators=[FileRequired(), FileAllowed(['png', 'jpg', 'jpeg', 'gif', 'webp'], 'Only images are allowed')])
     submit = SubmitField('Opublikuj')
+
+class CommentForm(FlaskForm):
+    content = StringField('Treść',
+                            validators=[DataRequired(), Length(min=3, max=300)])
+    submit = SubmitField('Dodaj komentarz')

@@ -61,7 +61,7 @@
                 <footer class="d-flex justify-content-between align-items-center pt-3 border-top">
                     <span class="text-muted small">
                         <i class="bi bi-chat me-1"></i>
-                        <span id="comments-count">0</span> komentarzy
+                        <span id="footer-comments-count">{{ comments|length }}</span> komentarzy
                     </span>
 
                     <button class="save-post-btn d-flex align-items-center gap-1" title="Zapisz post">
@@ -71,30 +71,15 @@
                 </footer>
             </article>
 
-            <section class="comments-section mt-5" data-post-id="{{ post.id }}">
-                <h2 class="h5 mb-4">Komentarze</h2>
+            <section id="comments" class="comments-section mt-5">
+                <h2 class="h5 mb-4">Komentarze (<span id="comments-count">{{ comments|length }}</span>)</h2>
 
-                <form id="inline-comment-form" class="mb-4">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Napisz komentarz..."
-                            id="inline-comment-input">
-                        <button class="btn btn-dark" type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                viewBox="0 0 16 16">
-                                <path
-                                    d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11Z" />
-                            </svg>
-                        </button>
-                    </div>
-                </form>
-
-                <div id="inline-comments-list">
+                <div id="comments-section">
+                    {% include 'partials/comments.html' %}
                 </div>
             </section>
 
         </div>
     </div>
 </main>
-
-<script src="{{ url_for('static', filename='js/post-comments.js') }}"></script>
 {% endblock %}
