@@ -50,7 +50,7 @@ def register_routes(app):
         return render_template('home.html', posts=initial_posts, has_more=has_more)
 
 
-    @app.route('/api/posts/<int:post_id>/comments')
+    @app.route('/api/posts/<string:post_id>/comments')
     @api_login_required
     def api_comments(post_id):
         """Endpoint API do pobierania komentarzy posta."""
@@ -61,13 +61,13 @@ def register_routes(app):
             'count': len(post_comments)
         })
 
-    @app.route('/post/<int:id>')
+    @app.route('/post/<string:id>')
     @login_required
     def show_post(id):
         post = Post.query.get_or_404(id)
         return render_template('post.html', post=post)
 
-    @app.route('/post/<int:id>/delete', methods=['POST'])
+    @app.route('/post/<string:id>/delete', methods=['POST'])    
     @login_required
     def delete_post(id):
         post = Post.query.get_or_404(id)
