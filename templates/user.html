@@ -34,14 +34,16 @@
 {% if latest_post %}
 <h2 class="mb-4 fs-4">Ostatni post</h2>
 <section class="d-flex mx-auto gap-5">
-    <div class="col-md-5 rounded-3 overflow-hidden mb-3">
+    <a href="{{ url_for('show_post', id=latest_post.id) }}"
+        class="col-md-5 rounded-3 overflow-hidden mb-3 latest-post-image" data-title="Zobacz post">
         <img src="{{ url_for('static', filename=latest_post.image_url) }}" class="img-fluid object-fit-cover">
-    </div>
+    </a>
 
     <div>
         <div class="text-muted flex-shrink-0">
             {{ latest_post.created_at.strftime('%Y-%m-%d') }}
         </div>
+        <h3 class="h5">{{ latest_post.title }}</h3>
         <div>{{ latest_post.content | safe }}</div>
     </div>
 </section>

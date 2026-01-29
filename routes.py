@@ -64,8 +64,8 @@ def register_routes(app):
     @app.route('/post/<int:id>')
     @login_required
     def show_post(id):
-        # TODO: Pobierz dane z bazy danych
-        return render_template('post.html', id=id)
+        post = Post.query.get_or_404(id)
+        return render_template('post.html', post=post)
 
     @app.route('/<string:username>')
     @login_required
