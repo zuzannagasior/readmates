@@ -6,44 +6,7 @@
 
 <div id="posts-container" class="d-flex flex-column gap-5 justify-content-center align-items-center" role="list"
     data-has-more="{{ 'true' if has_more else 'false' }}">
-    {% for post in posts %}
-    <article class="position-relative col-md-4 small" role="listitem">
-        <div class="text-muted flex-shrink-0 article-date">
-            {{ post.created_at.strftime('%Y-%m-%d') }}
-        </div>
-        <div class="d-flex flex-column">
-            <div class="w-100 rounded-3 overflow-hidden mb-3">
-                <img src="{{ url_for('static', filename=post.image_url) }}" class="img-fluid object-fit-cover">
-            </div>
-            <a href="{{ url_for('user', username=post.author.username) }}"
-                class="text-decoration-none text-dark fw-bold">@{{ post.author.username }}</a>
-            <div class="truncate-medium-text post-content">{{ post.content | safe }}</div>
-            <a href="{{ url_for('show_post', id=post.id) }}" class="read-more-link">zobacz całość</a>
-        </div>
-        <div class="d-flex mt-2 align-items-center gap-3">
-            {% if post.user_id != session.get('user_id') %}
-            <button
-                class="save-post-btn d-flex align-items-center gap-1 {% if post.id in saved_post_ids %}saved{% endif %}"
-                data-post-id="{{ post.id }}" data-csrf="{{ csrf_token() }}"
-                title="{% if post.id in saved_post_ids %}Usuń z biblioteki{% else %}Zapisz w bibliotece{% endif %}">
-                <i
-                    class="bi {% if post.id in saved_post_ids %}bi-bookmark-heart-fill{% else %}bi-bookmark-heart{% endif %}"></i>
-                <span class="small text-muted saves-count" id="saves-count">{{ post.saved_by.count() }}</span>
-            </button>
-            {% else %}
-            <div class="save-post-counter text-muted gap-1">
-                <i class="bi bi-bookmark-heart-fill"></i>
-                <div id="saves-count" class="me-1">{{ post.saved_by.count() }}</div>
-            </div>
-            {% endif %}
-            <a href="{{ url_for('show_post', id=post.id) }}#comments"
-                class="comments-link text-muted text-decoration-none d-flex align-items-center gap-1">
-                <i class="bi bi-chat"></i> {{ post.comments.count() }}
-            </a>
-
-        </div>
-    </article>
-    {% endfor %}
+    {% include 'partials/posts_list.html' %}
 </div>
 
 <div id="loader" class="d-flex justify-content-center py-5 {% if not has_more %}d-none{% endif %}">

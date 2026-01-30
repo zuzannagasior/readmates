@@ -7,7 +7,7 @@ from models import Comment, User, Post, SavedPost
 from functools import wraps
 from werkzeug.utils import secure_filename
 
-POSTS_PER_PAGE = 3
+POSTS_PER_PAGE = 8
 
 def login_required(f):
     @wraps(f)
@@ -33,14 +33,47 @@ def register_routes(app):
     @app.route('/')
     @login_required
     def home():
-        posts = Post.query.order_by(Post.created_at.desc()).all()
-        initial_posts = posts[:POSTS_PER_PAGE]
-        has_more = len(posts) > POSTS_PER_PAGE
+        pagination = Post.query.order_by(Post.created_at.desc()).paginate(
+            page=1, 
+            per_page=POSTS_PER_PAGE, 
+            error_out=False
+        )
         saved_post_ids = set(
             sp.post_id for sp in SavedPost.query.filter_by(user_id=session['user_id']).all()
         )
 
-        return render_template('home.html', posts=initial_posts, has_more=has_more, saved_post_ids=saved_post_ids)
+        return render_template(
+            'home.html', 
+            posts=pagination.items, 
+            has_more=pagination.has_next, 
+            saved_post_ids=saved_post_ids
+        )
+    
+    @app.route('/api/posts')
+    @api_login_required
+    def api_posts():
+        page = request.args.get('page', 1, type=int)
+        pagination = Post.query.order_by(Post.created_at.desc()).paginate(
+            page=page,
+            per_page=POSTS_PER_PAGE,
+            error_out=False
+        )
+        
+        saved_post_ids = set(
+            sp.post_id for sp in SavedPost.query.filter_by(user_id=session['user_id']).all()
+        )
+        
+        html = render_template(
+            'partials/posts_list.html',
+            posts=pagination.items,
+            saved_post_ids=saved_post_ids
+        )
+        
+        return jsonify({
+            'html': html,
+            'has_more': pagination.has_next,
+            'page': page
+        })
       
     @app.route('/post/<string:id>')
     @login_required
