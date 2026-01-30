@@ -6,6 +6,10 @@
     const loader = document.getElementById('loader');
     const endMessage = document.getElementById('end-message');
     
+    if (!hasMore) {
+        endMessage.classList.remove('d-none');
+    }
+    
     async function loadMorePosts() {
         if (loading || !hasMore) return;
         
