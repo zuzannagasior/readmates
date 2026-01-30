@@ -64,10 +64,21 @@
                         <span id="footer-comments-count">{{ comments|length }}</span> komentarzy
                     </span>
 
-                    <button class="save-post-btn d-flex align-items-center gap-1" title="Zapisz post">
-                        <span class="small text-muted" id="saves-count">0</span>
-                        <i class="bi bi-bookmark-heart"></i>
+                    {% if post.user_id != session.get('user_id') %}
+                    <button type="button"
+                        class="save-post-btn d-flex align-items-center gap-1 {% if is_saved %}saved{% endif %}"
+                        title="{% if is_saved %}Usuń z biblioteki{% else %}Zapisz w bibliotece{% endif %}"
+                        data-post-id="{{ post.id }}" data-csrf="{{ csrf_token() }}" id="save-btn">
+                        <span class="text-muted" id="saves-count">{{ saves_count }}</span>
+                        <i class="bi {% if is_saved %}bi-bookmark-heart-fill{% else %}bi-bookmark-heart{% endif %}"
+                            id="save-icon"></i>
                     </button>
+                    {% else %}
+                    <div class="save-post-counter text-muted">
+                        <div id="saves-count" class="me-1">{{ saves_count }}</div>
+                        <i class="bi bi-bookmark-heart-fill"></i>
+                    </div>
+                    {% endif %}
                 </footer>
             </article>
 
@@ -82,4 +93,6 @@
         </div>
     </div>
 </main>
+
+<script src="{{ url_for('static', filename='js/post-save.js') }}"></script>
 {% endblock %}

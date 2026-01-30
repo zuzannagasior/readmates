@@ -95,6 +95,9 @@ input:focus-visible, textarea:focus-visible {
     transition: opacity 0.3s ease;
     pointer-events: none;
     backdrop-filter: blur(2px);
+    text-align: center;
+    padding-left: 32px;
+    padding-right: 32px;
 }
 
 .article-profile-card div:hover::after {
@@ -218,13 +221,37 @@ input:focus-visible, textarea:focus-visible {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 24px;
+    font-size: 14px;
     padding: 0;
     margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .save-post-btn i {
+    font-size: 24px;
+    transition: all 0.3s ease;
+  }
+
+  .save-post-btn:hover i {
+    transform: scale(1.05);
+  }
+
+  .save-post-btn.saved i {
+    color: var(--bs-dark);
+  }
+
+  .save-post-counter {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .save-post-counter i {
+    font-size: 24px;
+    color: var(--bs-dark);
   }
 
 /* post detail */
@@ -276,6 +303,10 @@ input:focus-visible, textarea:focus-visible {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.post-content {
+  white-space: pre-line;
 }
 
 

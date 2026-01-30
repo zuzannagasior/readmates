@@ -20,6 +20,10 @@ class User(db.Model):
             .join(Post) \
             .filter(Post.user_id == self.id) \
             .scalar() or 0
+
+    def get_saved_posts(self):
+        from models import SavedPost
+        return Post.query.join(SavedPost).filter(SavedPost.user_id == self.id).order_by(SavedPost.saved_at.desc()).all()
     
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -48,3 +52,19 @@ class Comment(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False)
     post_id = db.Column(db.String(36), db.ForeignKey('posts.id'), nullable=False)
+
+
+class SavedPost(db.Model):
+    __tablename__ = 'saved_posts'
+
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False)
+    post_id = db.Column(db.String(36), db.ForeignKey('posts.id'), nullable=False)
+    saved_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    user = db.relationship('User', backref=db.backref('saved_posts', lazy='dynamic'))
+    post = db.relationship('Post', backref=db.backref('saved_by', lazy='dynamic'))
+
+    __table_args__ = (
+        db.UniqueConstraint('user_id', 'post_id', name='unique_user_post_save'),
+    )

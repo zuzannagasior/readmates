@@ -3,7 +3,7 @@ import uuid
 from flask import flash, jsonify, redirect, render_template, request, session, url_for, current_app
 from database import db
 from forms import CommentForm, CreatePostForm, LoginForm, RegistrationForm
-from models import Comment, User, Post
+from models import Comment, User, Post, SavedPost
 from functools import wraps
 from werkzeug.utils import secure_filename
 
@@ -36,8 +36,11 @@ def register_routes(app):
         posts = Post.query.order_by(Post.created_at.desc()).all()
         initial_posts = posts[:POSTS_PER_PAGE]
         has_more = len(posts) > POSTS_PER_PAGE
+        saved_post_ids = set(
+            sp.post_id for sp in SavedPost.query.filter_by(user_id=session['user_id']).all()
+        )
 
-        return render_template('home.html', posts=initial_posts, has_more=has_more)
+        return render_template('home.html', posts=initial_posts, has_more=has_more, saved_post_ids=saved_post_ids)
       
     @app.route('/post/<string:id>')
     @login_required
@@ -45,7 +48,11 @@ def register_routes(app):
         post = Post.query.get_or_404(id)
         comments = Comment.query.filter_by(post_id=id).order_by(Comment.created_at.desc()).all()
         comment_form = CommentForm()
-        return render_template('post.html', post=post, comments=comments, comment_form=comment_form)
+        
+        is_saved = SavedPost.query.filter_by(user_id=session['user_id'], post_id=id).first() is not None
+        saves_count = SavedPost.query.filter_by(post_id=id).count()
+        
+        return render_template('post.html', post=post, comments=comments, comment_form=comment_form, is_saved=is_saved, saves_count=saves_count)
 
     @app.route('/post/<string:id>/comment', methods=['POST'])
     @login_required
@@ -104,8 +111,10 @@ def register_routes(app):
         latest_post = posts[0] if posts else None
         other_posts = posts[1:] if posts else []
         comments_count = user.comments_count()
+        saved_posts = user.get_saved_posts()
+        saved_count = len(saved_posts)
 
-        return render_template('user.html', username=user.username, latest_post=latest_post, other_posts=other_posts, posts_count=len(posts), comments_count=user.comments_count())
+        return render_template('user.html', username=user.username, latest_post=latest_post, other_posts=other_posts, posts_count=len(posts), comments_count=user.comments_count(), saved_posts=saved_posts, saved_count=saved_count)
 
     @app.route('/create', methods=['POST'])
     @login_required
@@ -143,6 +152,39 @@ def register_routes(app):
             
         flash('Post został zapisany!', 'success')
         return redirect(url_for('user', username=session['username']))
+
+    @app.route('/post/<string:id>/save', methods=['POST'])
+    @api_login_required
+    def toggle_save_post(id):
+        try:
+            post = Post.query.get_or_404(id)
+            user_id = session['user_id']
+            
+            if post.user_id == user_id:
+                return jsonify({'error': 'Nie możesz zapisać własnego posta'}), 403
+
+            existing_save = SavedPost.query.filter_by(user_id=user_id, post_id=id).first()
+            
+            if existing_save:
+                db.session.delete(existing_save)
+                db.session.commit()
+                is_saved = False
+            else:
+                saved_post = SavedPost(user_id=user_id, post_id=id)
+                db.session.add(saved_post)
+                db.session.commit()
+                is_saved = True
+            
+            saves_count = SavedPost.query.filter_by(post_id=id).count()
+            
+            return jsonify({
+                'is_saved': is_saved,
+                'saves_count': saves_count
+            })
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'error': str(e)}), 500
+
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
