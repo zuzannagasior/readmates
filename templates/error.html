@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block body_class %}error-page{% endblock %}
+
+{% block body %}
+<div class="d-flex flex-column align-items-center justify-content-center min-vh-100">
+  <div class="d-flex flex-column gap-4 col-md-6 mx-auto text-center">
+    <header class="d-flex flex-column justify-content-center align-items-center gap-3">
+      <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo" class="logo-medium" />
+      <span class="logo-text-medium">Readmates</span>
+    </header>
+
+    <main class="d-flex flex-column gap-3">
+      <h1 class="display-1 fw-bold text-dark mb-0">{{ error_code }}</h1>
+      <h2 class="h4 text-muted">{{ error_title }}</h2>
+      <p class="text-secondary">{{ error_message }}</p>
+
+      <div class="mt-3">
+        <a href="{{ url_for('home') }}" class="btn btn-dark">
+          Wróć na stronę główną
+        </a>
+      </div>
+    </main>
+  </div>
+</div>
+{% endblock %}
