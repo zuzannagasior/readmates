@@ -1,6 +1,6 @@
 import os
 import uuid
-from flask import flash, jsonify, redirect, render_template, request, session, url_for, current_app
+from flask import abort, flash, jsonify, redirect, render_template, request, session, url_for, current_app
 from database import db
 from forms import CommentForm, CreatePostForm, LoginForm, RegistrationForm
 from models import Comment, User, Post, SavedPost
@@ -94,23 +94,27 @@ def register_routes(app):
         form = CommentForm()
         
         if form.validate_on_submit():
-            comment = Comment(
-                content=form.content.data,
-                post_id=id,
-                user_id=session['user_id']
-            )
-            db.session.add(comment)
-            db.session.commit()
-        
-        if request.headers.get('HX-Request'):
-            comments = Comment.query.filter_by(post_id=id).order_by(Comment.created_at.desc()).all()
-            comment_form = CommentForm()
-            return render_template('partials/comments.html', post=post, comments=comments, comment_form=comment_form, is_htmx=True)
-        
-        if form.validate_on_submit():
-            flash('Komentarz został dodany', 'success')
+            try:
+                comment = Comment(
+                    content=form.content.data,
+                    post_id=id,
+                    user_id=session['user_id']
+                )
+                db.session.add(comment)
+                db.session.commit()
+                
+                if request.headers.get('HX-Request'):
+                    comments = Comment.query.filter_by(post_id=id).order_by(Comment.created_at.desc()).all()
+                    comment_form = CommentForm()
+                    return render_template('partials/comments.html', post=post, comments=comments, comment_form=comment_form, is_htmx=True)
+                
+                flash('Komentarz został dodany', 'success')
+            except Exception:
+                db.session.rollback()
+                flash('Wystąpił błąd podczas dodawania komentarza', 'error')
         else:
-            flash('Error. Spróbuj ponownie później', 'error')
+            flash('Popraw błędy w formularzu', 'error')
+        
         return redirect(url_for('show_post', id=id))
 
     @app.route('/post/<string:id>/delete', methods=['POST'])    
@@ -122,24 +126,28 @@ def register_routes(app):
             flash('Nie masz uprawnień do usunięcia tego posta', 'error')
             return redirect(url_for('show_post', id=id))
         
-        if post.image_url:
-            image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], os.path.basename(post.image_url))
-            if os.path.exists(image_path):
-                os.remove(image_path)
-        
-        db.session.delete(post)
-        db.session.commit()
-        
-        flash('Post został usunięty', 'success')
-        return redirect(url_for('user', username=session['username']))
+        try:
+            if post.image_url:
+                image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], os.path.basename(post.image_url))
+                if os.path.exists(image_path):
+                    os.remove(image_path)
+            
+            db.session.delete(post)
+            db.session.commit()
+            
+            flash('Post został usunięty', 'success')
+            return redirect(url_for('user', username=session['username']))
+        except Exception:
+            db.session.rollback()
+            flash('Wystąpił błąd podczas usuwania posta', 'error')
+            return redirect(url_for('show_post', id=id))
 
     @app.route('/<string:username>')
     @login_required
     def user(username):
         user = User.query.filter_by(username=username).first()
         if not user:
-            # TODO: Wyświetl stronę 404
-            return redirect(url_for('home'))
+            abort(404)
         posts = Post.query.filter_by(user_id=user.id).order_by(Post.created_at.desc()).all()
         latest_post = posts[0] if posts else None
         other_posts = posts[1:] if posts else []
@@ -160,31 +168,42 @@ def register_routes(app):
             if file and allowed_file(file.filename):
                 ext = file.filename.rsplit('.', 1)[1].lower()
                 filename = f"{uuid.uuid4().hex}.{ext}"
-
                 filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-                file.save(filepath)
+                
+                try:
+                    file.save(filepath)
+                except Exception:
+                    flash('Wystąpił błąd podczas zapisywania pliku', 'error')
+                    return redirect(url_for('home'))
 
                 image_url = f"uploads/{filename}"
             else:
                 flash('Nieprawidłowy format pliku', 'error')
                 return redirect(url_for('home'))
 
-            post = Post(
-                title=form.title.data,
-                content=form.content.data,
-                image_url=image_url,
-                user_id=session['user_id']
-            )
+            try:
+                post = Post(
+                    title=form.title.data,
+                    content=form.content.data,
+                    image_url=image_url,
+                    user_id=session['user_id']
+                )
 
-            db.session.add(post)
-            db.session.commit()
-
+                db.session.add(post)
+                db.session.commit()
+                
+                flash('Post został zapisany!', 'success')
+                return redirect(url_for('user', username=session['username']))
+            except Exception:
+                db.session.rollback()
+           
+                if os.path.exists(filepath):
+                    os.remove(filepath)
+                flash('Wystąpił błąd podczas tworzenia posta', 'error')
+                return redirect(url_for('home'))
         else:
             flash('Popraw błędy w formularzu', 'error')
             return redirect(url_for('home'))
-            
-        flash('Post został zapisany!', 'success')
-        return redirect(url_for('user', username=session['username']))
 
     @app.route('/post/<string:id>/save', methods=['POST'])
     @api_login_required
@@ -214,9 +233,9 @@ def register_routes(app):
                 'is_saved': is_saved,
                 'saves_count': saves_count
             })
-        except Exception as e:
+        except Exception:
             db.session.rollback()
-            return jsonify({'error': str(e)}), 500
+            return jsonify({'error': 'Wystąpił błąd serwera'}), 500
 
 
     @app.route('/login', methods=['GET', 'POST'])
@@ -267,13 +286,18 @@ def register_routes(app):
                 flash('Email już istnieje', 'error')
                 return redirect(url_for('register'))
 
-            new_user = User(username=username, email=email)
-            new_user.set_password(password)
+            try:
+                new_user = User(username=username, email=email)
+                new_user.set_password(password)
 
-            db.session.add(new_user)
-            db.session.commit()
+                db.session.add(new_user)
+                db.session.commit()
 
-            return redirect(url_for('login'))
+                return redirect(url_for('home'))
+            except Exception:
+                db.session.rollback()
+                flash('Wystąpił błąd podczas rejestracji', 'error')
+                return redirect(url_for('register'))
         elif request.method == 'POST':
             flash('Popraw błędy w formularzu', 'error')
 
